@@ -1,0 +1,229 @@
+%
+%  卒論概要用スタイルファイル
+%
+%  Dec. 18. '01
+%  by Tetsuro Katayama
+%  
+% 現在は、α版。
+%
+
+\typeout{Document Style `grad-abst'. <18 Dec. 01> by kat@cs.miyazaki-u.ac.jp.}
+
+%
+% 卒論概要用スタイルファイルの使用法
+%
+% まず、
+%
+% \documentstyle{grad-abst}
+%
+% とする。
+%
+% 次に、論文の表題と自分の名前を書く。
+%
+% \title{卒論/修論のタイトル}
+% \author{片山 徹郎}
+%
+% 学科を記入
+%
+% \major{情報工学科}
+% 
+% 続いて%%%%%%%%%%講座名、
+%
+% 研究室名
+%%%%%%%%%%%
+% \cource{産業情報システム講座}
+%%%%%%%%%%%
+% \lab{片山研究室}
+%
+% を書き、
+%
+% \begin{document}
+% \maketitle
+% 
+% 本文
+% 
+% \end{document}
+%
+% 本文では以下の項目が使える。
+%
+% \section{目的}			%  セクション
+% \subsection{スタイルファイル}		%  サブセクション
+% \subsubsection{}			%  サブサブセクション
+% \paragraph{}				%  パラグラフ
+% \subparagraph{}			%  サブパラグラフ
+% \begin{thebibliography}		%  参考文献
+% \item
+% \end{thebibliography}
+%
+%
+% 文字のデフォルトは 11pt に設定。
+%
+% 印刷されるページ数を変更したいときは、
+%
+% \setcounter{page}{希望ページ番号}
+%
+% を冒頭に記入すること。
+%
+%
+% 以上
+%			片山 徹郎 (kat@cs.miyazaki-u.ac.jp)
+%
+%
+
+%\newcommand{\JTeX}{\leavevmode\lower.5ex\hbox{J}\kern-.18em\TeX}
+%\newcommand{\JLaTeX}{\leavevmode\lower.5ex\hbox{\rm J}\kern-.1em\LaTeX}
+
+\@namedef{ds@10pt}{\def\@ptsize{0}}
+\def\baselinestretch{1}
+\def\baselinechange#1{\def\baselinestretch{#1}\@normalsize}
+
+%\input jarticle.sty
+
+% オプションをチェックする
+\def\@ptsize{1}                 % デフォルトは11pt
+\@options
+\input packages/j-art1\@ptsize.sty\relax
+
+\input packages/jtwocolumn.sty           % 二段組
+
+%
+% ページスタイル
+%
+
+\setlength{\oddsidemargin}{-3mm}
+\setlength{\evensidemargin}{-3mm}
+\setlength{\topmargin}{0mm}
+
+\setlength{\textheight}{24.7 cm} % A4
+\setlength{\textwidth}{17 cm}
+
+\headheight 0mm			% ヘッダーの高さ
+\headsep 0mm			% ヘッダーと本文の間隔
+%\footheight 10mm			% フッタの高さ
+\footskip 8mm			% 本文からページの再下端まで間隔
+\columnsep 4mm			% カラムの間隔
+
+
+
+%\setlength{\partopsep}{2 mm}
+%\setlength{\topsep}{0 mm}
+%\setlength{\itemsep}{0.1 mm}
+%\setlength{\parsep}{0 mm}
+
+% \pagestyle{empty}		% ページを印刷する
+
+% 
+%   表題-title
+%
+
+\def\maketitle{\par
+ \begingroup
+ \def\thefootnote{\blsymbol{footnote}}
+ \def\@makefnmark{\hbox 
+ to 0pt{$^{\@thefnmark}$\hss}} 
+ \if@twocolumn 
+ \twocolumn[\@maketitle] 
+ \else \newpage
+ \global\@topnum\z@ \@maketitle \fi
+% \thispagestyle{empty}
+ \endgroup
+ \let\maketitle\relax
+ \let\@maketitle\relax
+}
+
+\def\@maketitle{\newpage
+ \begin{center}
+  \vskip -5mm
+  {\Large \bf \@title \par} \vskip 0.5em
+  {\large 宮崎大学 工学部 \@major \space
+          %\@cource \space
+          \@lab \par \vskip 0.5em \@author}
+ \end{center}
+ \par
+ \vskip 1mm
+} 
+
+
+\def\major{\def\@major}
+\def\cource{\def\@cource}
+\def\lab{\def\@lab}
+\title{論文のタイトル}
+\author{名前}
+\major{学科名}
+%\cource{講座名}
+\lab{研究室名}
+
+
+%
+% 章建て-section
+%
+
+\def\section{\@startsection {section}{1}{\z@}{0.5ex plus 0.2ex minus 
+ .2ex}{1.0ex plus .2ex}{\font@s}}
+\def\subsection{\@startsection{subsection}{2}{\z@}{0.6ex plus 0.1ex minus 
+ .2ex}{0.5ex plus .2ex}{\font@ss}}
+\def\subsubsection{\@startsection{subsubsection}{3}{\z@}{0.5ex plus 
+0.2ex minus .2ex}{1.0ex plus .2ex}{\font@sss}}
+\def\paragraph{\@startsection
+ {paragraph}{4}{\z@}{0.5ex plus 0.2ex minus .2ex}{-1em}{\normalsize\bf}}
+\def\subparagraph{\@startsection
+ {subparagraph}{4}{\parindent}{0.5ex plus 0.2ex minus 
+ .2ex}{-1em}{\normalsize\bf}}
+
+\def\sectionfont#1#2#3{\gdef\font@s{#1}\gdef\font@ss{#2}\gdef\font@sss{#3}}
+\sectionfont{\large\bf}{\normalsize\bf}{\normalsize\bf}
+
+\def\thepart{\Roman{part}} 
+\def\thesection {\arabic{section}.}
+\def\thesubsection {\thesection\arabic{subsection}}
+\def\thesubsubsection {\thesubsection.\arabic{subsubsection}}
+\def\theparagraph {\thesubsubsection.\arabic{paragraph}}
+\def\thesubparagraph {\theparagraph.\arabic{subparagraph}}
+
+%
+% 箇条書- enumerate, itemize
+%
+
+\def\labelitemi{$\bullet$}
+\def\labelitemii{--}
+\def\labelitemiii{$\diamond$}
+\def\labelitemiv{$\ast$}
+
+\def\labelenumi{\roman{enumi})}
+\def\theenumi{\roman{enumi}}
+\def\labelenumii{(\arabic{enumii})}
+\def\theenumii{\arabic{enumii}}
+\def\labelenumiii{\alph{enumiii})}
+\def\theenumiii{\alph{enumiii}}
+\def\labelenumiv{\Roman{enumiv}.}
+\def\theenumiv{\Roman{enumiv}}
+
+%
+% 参考文献
+%
+
+
+\def\thebibliography#1{\section*{参考文献\markboth
+ {参考文献}{参考文献}}\list
+ {[\arabic{enumi}]}{\settowidth\labelwidth{[#1]}\leftmargin\labelwidth
+ \advance\leftmargin\labelsep
+ \usecounter{enumi}}
+ \def\newblock{\hskip .11em plus .33em minus -.07em}
+ \fussy
+ \sfcode`\.=1000\relax
+}
+\let\endthebibliography=\endlist
+
+
+% 参考文献の引用形式
+
+\def\@cite#1#2{$^{\mbox{\scriptsize{[#1\if@tempswa , #2\fi]}}}$}
+
+% newtheorem
+
+\def\@begintheorem#1#2{\trivlist \item[\hskip \labelsep{\bf [#1\ #2]}]}
+\def\@opargbegintheorem#1#2#3{\trivlist
+      \item[\hskip \labelsep{\bf\dg [#1\ #2\ (#3)]}]}
+
+\newtheorem{example}{例}
+
